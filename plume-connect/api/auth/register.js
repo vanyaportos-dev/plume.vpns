@@ -19,7 +19,12 @@ module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   
   try {
-    const { name, email, password } = req.body;
+    // 🔧 ФИКС: парсим тело если это строка
+    let body = req.body;
+    if (typeof body === 'string') {
+      body = JSON.parse(body);
+    }
+    const { name, email, password } = body;
     
     if (!email || !password || !name) {
       return res.status(400).json({ error: 'Все поля обязательны' });
