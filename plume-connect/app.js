@@ -193,3 +193,41 @@ function formatDate(iso) {
 
 // Экспорт для использования в других скриптах
 window.PlumeApp = { showToast, escapeHtml, formatDate };
+
+// ============================================================
+// TELEGRAM MINI APP — АВТО-ВХОД
+// ============================================================
+
+if (window.Telegram && window.Telegram.WebApp) {
+  (async function() {
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand(); // Раскрыть на весь экран
+
+    const initData = tg.initData;
+
+    // Если уже авторизованы — пропускаем
+    if (getAuthToken()) return;
+
+    try {
+      const r = await fetch('/api/auth/telegram/miniapp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ initData })
+      });
+
+      const d = await r.json();
+      if (d.token) {
+        localStorage.setItem(AUTH_TOKEN_KEY, d.token);
+        localStorage.setItem(AUTH_USER_KEY, JSON.stringify(d.user));
+
+        // Если на странице логина/регистрации — редирект на дашборд
+        if (window.location.pathname === '/login' || window.location.pathname === '/register') {
+          window.location.href = '/dashboard';
+        }
+      }
+    } catch (e) {
+      console.error('Mini App auth error:', e);
+    }
+  })();
+}
