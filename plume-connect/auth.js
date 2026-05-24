@@ -43,18 +43,20 @@ async function checkAuth() {
     // Сеть недоступна
   }
 
-  // Недействительный токен — очищаем
   localStorage.removeItem(AUTH_TOKEN_KEY);
   localStorage.removeItem(AUTH_USER_KEY);
   return null;
 }
 
-/* ── Вход ────────────────────────────────────────────────────── */
+/* ── Вход (через FormData) ──────────────────────────────────── */
 async function login(email, password) {
+  const formData = new FormData();
+  formData.append('email', email.trim());
+  formData.append('password', password);
+
   const r = await fetch(`${API_BASE}/auth/login`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: email.trim(), password })
+    body: formData
   });
 
   const d = await r.json();
@@ -68,12 +70,16 @@ async function login(email, password) {
   }
 }
 
-/* ── Регистрация ─────────────────────────────────────────────── */
+/* ── Регистрация (через FormData) ──────────────────────────── */
 async function register(name, email, password) {
+  const formData = new FormData();
+  formData.append('name', name.trim());
+  formData.append('email', email.trim());
+  formData.append('password', password);
+
   const r = await fetch(`${API_BASE}/auth/register`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name: name.trim(), email: email.trim(), password })
+    body: formData
   });
 
   const d = await r.json();
@@ -193,7 +199,6 @@ function clearFieldError(inputEl, errorEl) {
     return valid;
   }
 
-  // Live validation
   emailInput.addEventListener('blur', () => {
     if (emailInput.value) {
       if (!validateEmail(emailInput.value)) {
@@ -218,7 +223,6 @@ function clearFieldError(inputEl, errorEl) {
     e.preventDefault();
     if (!validate()) return;
 
-    // Показать загрузку
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<div class="spinner"></div><span>Входим...</span>';
     if (alertBox) alertBox.innerHTML = '';
@@ -294,7 +298,6 @@ function clearFieldError(inputEl, errorEl) {
     return valid;
   }
 
-  // Live validation
   [
     [nameInput, nameError, () => !validateName(nameInput.value) ? 'Имя должно быть не менее 2 символов' : ''],
     [emailInput, emailError, () => !validateEmail(emailInput.value) ? 'Введите корректный email' : ''],
@@ -349,7 +352,6 @@ function clearFieldError(inputEl, errorEl) {
 
   if (!user) return;
 
-  // Заменить кнопки "Войти/Начать" на имя пользователя и кнопку выхода
   if (navActions) {
     navActions.innerHTML = `
       <span style="color: var(--text-secondary); font-size: 0.875rem; font-weight: 500;">
@@ -376,5 +378,4 @@ function clearFieldError(inputEl, errorEl) {
   }
 })();
 
-// Сделать logout глобальным для onclick
 window.logout = logout;
