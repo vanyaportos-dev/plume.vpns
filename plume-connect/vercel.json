@@ -1,13 +1,20 @@
 {
   "outputDirectory": ".",
   "rewrites": [
-    { "source": "/",          "destination": "/index.html"    },
-    { "source": "/login",     "destination": "/login.html"    },
-    { "source": "/register",  "destination": "/register.html" },
-    { "source": "/dashboard", "destination": "/dashboard.html" },
-    { "source": "/admin",     "destination": "/admin.html"    },
-    { "source": "/api/vpn/(.*)", "destination": "/api/vpn.js" },
-    { "source": "/api/test",  "destination": "/api/test.js"   }
+    { "source": "/",                          "destination": "/index.html"                    },
+    { "source": "/login",                     "destination": "/login.html"                    },
+    { "source": "/register",                  "destination": "/register.html"                 },
+    { "source": "/dashboard",                 "destination": "/dashboard.html"                },
+    { "source": "/admin",                     "destination": "/admin.html"                    },
+    { "source": "/api/auth/telegram",         "destination": "/api/auth/telegram.js"          },
+    { "source": "/api/auth/me",               "destination": "/api/auth/me.js"                },
+    { "source": "/api/auth/login",            "destination": "/api/auth/login.js"             },
+    { "source": "/api/auth/logout",           "destination": "/api/auth/logout.js"            },
+    { "source": "/api/auth/register",         "destination": "/api/auth/register.js"          },
+    { "source": "/api/vpn/(.*)",              "destination": "/api/vpn.js"                    },
+    { "source": "/api/adaptgroup",            "destination": "/api/adaptgroup.js"             },
+    { "source": "/api/webhook/adaptgroup",    "destination": "/api/webhook/adaptgroup.js"     },
+    { "source": "/api/test",                  "destination": "/api/test.js"                   }
   ],
   "headers": [
     {

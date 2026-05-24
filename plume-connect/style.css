@@ -1406,3 +1406,48 @@ p { color: var(--text-secondary); line-height: 1.7; }
     border-radius: var(--radius-lg);
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Telegram Login Widget — divider & wrapper
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* "или" divider between email form and Telegram widget */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0 20px;
+}
+
+.auth-divider-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border, rgba(255, 255, 255, 0.1));
+}
+
+.auth-divider-text {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.45));
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+/* Center and clip the Telegram iframe */
+.auth-telegram-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 54px;
+  margin-bottom: 8px;
+  /* Telegram widget injects an <iframe> — make sure it's visible */
+  overflow: visible;
+}
+
+/* The widget script injects an <iframe> directly; make it render nicely */
+.auth-telegram-wrap iframe {
+  display: block !important;
+  border: none !important;
+  border-radius: 12px !important;
+}
