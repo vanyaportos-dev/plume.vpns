@@ -15,24 +15,26 @@ function generateToken() {
   return crypto.randomBytes(32).toString('hex');
 }
 
-// 🔧 ФУНКЦИЯ ДЛЯ ПАРСИНГА ТЕЛА (РАБОТАЕТ ВСЕГДА)
-async function parseBody(req) {
-  if (req.body && typeof req.body === 'object' && Object.keys(req.body).length > 0) {
-    return req.body;
-  }
+// 🔧 Парсим FormData
+async function parseFormData(req) {
   const chunks = [];
   for await (const chunk of req) {
     chunks.push(chunk);
   }
   const raw = Buffer.concat(chunks).toString('utf-8');
-  return raw ? JSON.parse(raw) : {};
+  const params = new URLSearchParams(raw);
+  const result = {};
+  for (const [key, value] of params) {
+    result[key] = value;
+  }
+  return result;
 }
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   
   try {
-    const body = await parseBody(req);
+    const body = await parseFormData(req);
     const { email, password } = body;
     
     if (!email || !password) {
