@@ -15,15 +15,25 @@ function generateToken() {
   return crypto.randomBytes(32).toString('hex');
 }
 
+// 🔧 ФУНКЦИЯ ДЛЯ ПАРСИНГА ТЕЛА (РАБОТАЕТ ВСЕГДА)
+async function parseBody(req) {
+  if (req.body && typeof req.body === 'object' && Object.keys(req.body).length > 0) {
+    return req.body;
+  }
+  // Читаем сырой буфер
+  const chunks = [];
+  for await (const chunk of req) {
+    chunks.push(chunk);
+  }
+  const raw = Buffer.concat(chunks).toString('utf-8');
+  return raw ? JSON.parse(raw) : {};
+}
+
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   
   try {
-    // 🔧 ФИКС: парсим тело если это строка
-    let body = req.body;
-    if (typeof body === 'string') {
-      body = JSON.parse(body);
-    }
+    const body = await parseBody(req);
     const { name, email, password } = body;
     
     if (!email || !password || !name) {
