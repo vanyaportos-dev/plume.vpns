@@ -6,7 +6,8 @@
     { "source": "/register",  "destination": "/register.html" },
     { "source": "/dashboard", "destination": "/dashboard.html" },
     { "source": "/admin",     "destination": "/admin.html"    },
-    { "source": "/api/vpn/(.*)", "destination": "/api/vpn.js" }
+    { "source": "/api/vpn/(.*)", "destination": "/api/vpn.js" },
+    { "source": "/api/test",  "destination": "/api/test.js"   }
   ],
   "headers": [
     {
