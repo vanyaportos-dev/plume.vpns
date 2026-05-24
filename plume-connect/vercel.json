@@ -14,7 +14,8 @@
     { "source": "/api/vpn/(.*)",              "destination": "/api/vpn.js"                    },
     { "source": "/api/adaptgroup",            "destination": "/api/adaptgroup.js"             },
     { "source": "/api/webhook/adaptgroup",    "destination": "/api/webhook/adaptgroup.js"     },
-    { "source": "/api/test",                  "destination": "/api/test.js"                   }
+    { "source": "/api/test",                  "destination": "/api/test.js"                   },
+    { "source": "/api/auth/telegram/miniapp", "destination": "/api/auth/telegram/miniapp.js" }
   ],
   "headers": [
     {
