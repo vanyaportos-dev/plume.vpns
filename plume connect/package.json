@@ -1,8 +1,0 @@
-{
-  "name": "plume-connect",
-  "version": "2.0.0",
-  "private": true,
-  "dependencies": {
-    "@upstash/redis": "^1.0.0"
-  }
-}
